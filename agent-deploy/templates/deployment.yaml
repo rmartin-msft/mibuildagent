@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: azdevops-deployment
+  labels:
+    app: azdevops-agent
+spec:
+  replicas: {{ .Values.replicaCount }} 
+  selector:
+    matchLabels:
+      app: azdevops-agent
+  template:
+    metadata:
+      labels:
+        app: azdevops-agent
+        azure.workload.identity/use: "true"
+      annotations:
+        azure.workload.identity/inject_proxy_sidecar: "true"        
+    spec:
+      serviceAccountName: workload-identity-sa
+      containers:
+      - name: kubepodcreation
+        image: eaststarcr.azurecr.io/{{ .Values.image.repository }}:{{ .Values.image.tag }}        
+        env:
+          - name: AZP_URL
+            valueFrom:
+              secretKeyRef:
+                name: azdevops
+                key: AZP_URL
+          - name: AZP_POOL
+            valueFrom:
+              secretKeyRef:
+                name: azdevops
+                key: AZP_POOL
+        volumeMounts:
+        - mountPath: /var/run/docker.sock
+          name: docker-volume
+      volumes:
+      - name: docker-volume
+        hostPath:
+          path: /var/run/docker.sock
+      terminationGracePeriodSeconds: 60
+
