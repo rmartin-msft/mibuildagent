@@ -3,13 +3,13 @@
 Builing the docker image and pushing to the container repositiory
 
 ```
-docker build -t "wi-azp-linux:latest" -t "eaststarcr.azurecr.io/wi-azp-linux:latest" -f ./wi-azp-linux.dockerfile .
+docker build -t "wi-azp-linux:latest" -t "myacr.azurecr.io/wi-azp-linux:latest" -f ./wi-azp-linux.dockerfile .
 ```
 
 Once the image is complete you can push to the container repository
 
 ```
-docker push "eaststarcr.azurecr.io/wi-azp-linux:latest"
+docker push "myacr.azurecr.io/wi-azp-linux:latest"
 ```
 
 To start the container running on the AKS cluster

@@ -20,7 +20,7 @@ spec:
       serviceAccountName: workload-identity-sa
       containers:
       - name: kubepodcreation
-        image: eaststarcr.azurecr.io/{{ .Values.image.repository }}:{{ .Values.image.tag }}        
+        image: {{ .Values.image.containerRegistry }}.azurecr.io/{{ .Values.image.repository }}:{{ .Values.image.tag }}        
         env:
           - name: AZP_URL
             valueFrom:

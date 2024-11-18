@@ -5,6 +5,7 @@
 replicaCount: 1
 
 image:
+  containerRegistry: myacr
   repository: wi-azp-linux
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
